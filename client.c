@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <sys/fcntl.h>
+#include <netdb.h>
 //bryan and ohallarant pg 953
 
 
@@ -17,8 +18,6 @@ struct sockaddr_in saddr;
     //                      localhost:127.0.0.1
     //                          7F=127|00=0|00=0|001=1
     saddr.sin_addr.s_addr = htonl(0x7F000001);
-
-
     int clientfd = socket(AF_INET, SOCK_STREAM, 0);
     if(clientfd == -1){
         perror("ERROR creating server fd");
@@ -29,11 +28,13 @@ struct sockaddr_in saddr;
         perror("ERROR creating listener");
         return EXIT_FAILURE;
     }
-    char* hello = "i hate you and everything you stand for.\n";
     char buffy[128];
     while(fgets(buffy, sizeof(buffy), stdin) != NULL){
-        send(clientfd, buffy, strlen(hello), 0);
+        if(send(clientfd, buffy, strlen(buffy), 0)==-1){
+            close(clientfd);
+            perror("Something went wrong when send()");
+        }
     }
-
+    close(clientfd);
     return EXIT_SUCCESS;
 }

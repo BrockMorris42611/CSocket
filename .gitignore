@@ -1,0 +1,6 @@
+# Ignore compiled object files
+*.o
+# Ignore build directories
+build/
+# Ignore log files
+*.log

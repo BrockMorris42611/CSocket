@@ -12,6 +12,7 @@
 //bryan and ohallarant pg 953
 //edit c/cpp extension to have cmd argument "std=gnu17"
 int main(){
+
     struct sockaddr_in saddr;
     saddr.sin_family = AF_INET;
     saddr.sin_port = htons(0x50); //port 80 in hex (host -> network byte order)
@@ -41,8 +42,15 @@ int main(){
     }
 
     char hello[128];
-    while(recv(accepted, hello, sizeof(hello), 0)){
+    ssize_t bytes_recv;
+    while((bytes_recv = recv(accepted, hello, sizeof(hello), 0)) > 0){
         printf("from client> %s", hello);
     }
+    if (bytes_recv == -1) {
+        perror("ERROR receiving data");
+        close(accepted); // Close the accepted socket on error
+        return EXIT_FAILURE;
+    }
+    close(accepted); // Close the accepted socket after the loop
     return EXIT_SUCCESS;
 }
