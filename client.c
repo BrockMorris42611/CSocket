@@ -26,7 +26,7 @@ int main(){
         perror("ERROR creating server fd");
         return EXIT_FAILURE;
     }
-    printf("sock: %d", clientfd);
+    printf("sock: %d\n", clientfd);
     int conn = connect(clientfd, (struct sockaddr *)&saddr, sizeof(struct sockaddr_in));
     if(conn == -1){
         perror("ERROR creating listener");
