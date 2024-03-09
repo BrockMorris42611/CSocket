@@ -14,8 +14,6 @@
 #define NUM_OF_THREADS 2
 /*---------------------------------------------------------------------*/
 void *begin_talking(void *__fd);
-int hasNullTerm(char *s);
-
 //bryan and ohallarant pg 953
 //edit c/cpp extension to have cmd argument "-std=gnu17"
 

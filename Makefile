@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g -fstack-usage
+CFLAGS = -Wall -Wextra -g -fstack-usage -std=gnu17
 
 all: client server
 
